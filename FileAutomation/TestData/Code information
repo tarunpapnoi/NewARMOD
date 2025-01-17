@@ -1,0 +1,60 @@
+AN selection criteria:
+ ban status = C/O
+ portfolio_cat   = SMB/other
+ random digit, 
+ customer risk
+ 
+ 		String BAN_status='O';
+		String portfolio_cat="SMB";
+		int random_digit=15;
+		String customer_risk="H";
+
+common
+  Get index of columns from BAN sheet    --Done
+  check if status column is present in the Bans list, exit if not present    --DOne
+  get index of rows where status is c/o (based on ruileid from rulebook) and save in an arraylist  --Semi Done
+  --search the rule in rulebook  (first implement active rules)   --yet ot be done
+  fetch ban details from excel sheet from random index no and save to map banValue   --Done
+ 
+populate IAS				
+  fetch amtODCancelC0To3, delqCycleCancel from rulebook and save to variable
+  open IAS file and write to file
+  
+Populate Input invoice file
+  Open the file
+  enter ban from banValue
+  enter dates. ---get dates from user
+  Tax Amount
+  data source id =1001
+  total tax amount 0
+ 
+CM account  file
+  creation_date is OPEN_DATE and status date for open bans
+  CUSTOMER_TYPE	CUST_SUB_TYPE	PAYMENT_METHOD are as is the TC 
+  L9_PREFERRED_LANGUAGE EN 
+  FLAG  New or CLOSED   blank default
+  DEPOSIT_AMt should be 0
+
+Input aged status 
+FLAG New or OLD default new
+delq cycle max 3 
+
+
+
+- Bans filtered based on 
+
+- cancelled bans criteria
+   - activity date will go last payment date
+   - last patment 29 aug, 29 nov ACTIVITY_DATE, STATUS_DATE  is also 29 nov
+   
+end 2 end
+fetch the bans from database > use bans to create the file > bill call > DB validation.
+
+
+we have bans and required details> cretea file
+
+excelreader->GetHeaderColumnNames
+           ->getInput->createInputFiles
+				     ->getBANDetails->createInputInvoiceFIle
+									->createCmAccountFIle
+									->createInputAgedStatus
