@@ -13,21 +13,16 @@ on:
     inputs:
       inputBANFile1:
         description: 'Path to the BAN list'
-        # Input has to be provided for the workflow to run
         required: false
       UserInput:
         description: 'Path to user scenarios file'
-        # Input has to be provided for the workflow to run
         required: false
       outputpath:
         description: 'Path to the output folder'
-        # Input has to be provided for the workflow to run
         required: false
-
 
 jobs:
   build:
-
     runs-on: self-hosted
 
     steps:
@@ -38,11 +33,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      - name: Build with Maven
+        run: mvn -B package --file ARMODFileAutomation/FileAutomation/pom.xml
 
   RUN_FILE_AUTOMATION_FLOW:
     runs-on: self-hosted
     needs: [build]
     steps:
-    - name: run main
-      run: |
-        run: mvn -B package --file ARMODFileAutomation/FileAutomation/pom.xml
+      - name: Run ExcelReader main class
+        run: |
+          java -cp ARMODFileAutomation/FileAutomation/target/classes com.telus.Properties.ExcelReader
+
