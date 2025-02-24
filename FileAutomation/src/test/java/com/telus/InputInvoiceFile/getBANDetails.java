@@ -25,7 +25,7 @@ public class getBANDetails {
     String customer_risk,
     String eMail,
     int del_Cycle,
-    List<String> testResultstestResults,int i ) throws FileNotFoundException {
+    List<String> testResultstestResults,int i ) throws IOException {
 		
 		/*
 		//Inputs for BAN selection
@@ -49,9 +49,9 @@ public class getBANDetails {
 	            Sheet sheet = workbook.getSheetAt(0);
 	            Iterator<Row> rowIterator = sheet.iterator();
 
-	           
+
 	            Row headerRow = rowIterator.next(); // Skipping header row
-	            
+
 	            //init the column index here
 	            int banIndex= -1;
 	            int creation_dateIndex= -1;
@@ -80,16 +80,16 @@ public class getBANDetails {
 	            int address_13Index	 = -1;
 	            int address_14Index	 = -1;
 	            int address_15Index = -1;
-	            
+
 	            ArrayList<Integer> statusIndex = new ArrayList<>();
-	            
+
 	            Iterator<Cell> headerCellIterator = headerRow.cellIterator();
-	            
+
 	            //Get index of columns from BAN sheet********************************
 	            while (headerCellIterator.hasNext()) {
 	                Cell headerCell = headerCellIterator.next();
 	                String str1=headerCell.getStringCellValue().toLowerCase();
-	                
+
 	                switch (str1) {
 	                case ("ban"):
 	                	banIndex=headerCell.getColumnIndex();
@@ -176,24 +176,24 @@ public class getBANDetails {
 	                case ("customer_risk"):
 	                	customer_riskIndex=headerCell.getColumnIndex();
 	                break;
-	                	
+
 	                }
-                        
-                        
+
+
 	            }
 	            //System.out.println("portfolio index is "+ portfolioIndex);
 	            //System.out.println("customer_risk index is "+ customer_riskIndex);
 
-	            
+
 	          //check if status column is present in the Bans list********************************
 	            if (ban_statusIndex == -1 || banIndex== -1 || portfolioIndex== -1 || random_digitIndex== -1 || customer_riskIndex== -1) {
 	                System.out.println("One or more mandatory columns are missing in BAN list. please check the BAN file");
 	                System.out.println(" Status, BAN, portfolio, random digit or cust risk column not found in the Excel file.");
 	                System.exit(0);
 	            }
-	            
+
 	            //System.out.println("customer_risk " + customer_risk);
-	            
+
 		       // get index of rows where status is C/O and save in an arraylist based on rule****************
 	            System.out.println("Iterating over rows and columns to fetch the index of rows based on our requirements");
 	            while (rowIterator.hasNext()) {
@@ -202,25 +202,25 @@ public class getBANDetails {
 	                Cell portfolioCell = row.getCell(portfolioIndex);
 	                Cell rDigitCell = row.getCell(random_digitIndex);
 	                Cell cRiskCell = row.getCell(customer_riskIndex);
-	                
+
 	                //System.out.println(row.getRowNum());
 	                //System.out.println(" statusCell.getCellType()" +  statusCell.getCellType());
 	                //System.out.println("BAN_status.equalsIgnoreCase(statusCell.getStringCellValue()" + BAN_status.equalsIgnoreCase(statusCell.getStringCellValue()));
 	                //System.out.println("portfolio_cat.equalsIgnoreCase(portfolioCell.getStringCellValue() " + portfolio_cat.equalsIgnoreCase(portfolioCell.getStringCellValue()));
 	                //System.out.println("rDigitCell.getNumericCellValue() "+ rDigitCell.getNumericCellValue());
 	                //System.out.println("customer_risk==cRiskCell.getStringCellValue() "+ customer_risk==cRiskCell.getStringCellValue());
-	                
-	                
+
+
 	                // Filter the BANs based on Inputs
 	                //System.out.println("customer_risk " + customer_risk);
 	                //System.out.println("cRiskCell.getStringCellValue() " + cRiskCell.getStringCellValue());
 	                //System.out.println("customer_risk " + customer_risk);
-	                if (statusCell != null && statusCell.getCellType() == CellType.STRING 
+	                if (statusCell != null && statusCell.getCellType() == CellType.STRING
 	                        && BAN_status.equalsIgnoreCase(statusCell.getStringCellValue())
 	                        && portfolioCell != null
 	                        && portfolio_cat.equalsIgnoreCase(portfolioCell.getStringCellValue())
-	                        && rDigitCell.getNumericCellValue()>=random_digit
-	                        && customer_risk.equalsIgnoreCase(cRiskCell.getStringCellValue())
+	                        //&& rDigitCell.getNumericCellValue()>=random_digit
+	                        //&& customer_risk.equalsIgnoreCase(cRiskCell.getStringCellValue())
 	                        ) {
 
 	                	statusIndex.add(row.getRowNum());
@@ -240,12 +240,12 @@ public class getBANDetails {
 	                	}//else {System.out.println("Issue in BAN_status");}
 	                }//else {System.out.println("Issue in getCellType");}
 	                */
-	                
+
 	               }
 
 	            System.out.println("Status Index" +statusIndex);
-	            
-	           //********************************************************************** 
+
+	           //**********************************************************************
 	          //fetch ban from excel sheet from random index no and save to variable************
 	            String BAN;
 	            if (statusIndex.size() == 0) {
@@ -253,9 +253,11 @@ public class getBANDetails {
 	            } else {
 	                System.out.println("The ArrayList  statusIndex is not empty.");
 	            }
-	            
+
 	            Random random = new Random();
 
+
+				try{
 	            // Generate a random index between 0 and size of the ArrayList - 1
 	            int randomIndex = random.nextInt(statusIndex.size());
 
@@ -264,17 +266,17 @@ public class getBANDetails {
 
 	            // Print the random element
 	            System.out.println("Random element from the ArrayList: " + randomElement);
-	            
+
 	            Cell cell = sheet.getRow(randomElement).getCell(banIndex);
-	            
+
 	            BAN=String.valueOf((long)cell.getNumericCellValue());
 	            System.out.println("Random BAN  based on that element from the ArrayList: " + BAN);
-	            
+
 	            Map<String, Integer> rowMap = new HashMap<>();
-	            
+
 	         // Get the first row (header row)
 	            headerRow = sheet.getRow(0);
-	            
+
 	         // Iterate through each cell in the header row
 	            Iterator<Cell> cellIterator = headerRow.cellIterator();
 	            while (cellIterator.hasNext()) {
@@ -284,51 +286,57 @@ public class getBANDetails {
 	                int columnIndex = cell1.getColumnIndex();
 	                rowMap.put(columnName, columnIndex);
 	            }
-	            
+
 	         // Now, retrieve a specific row (e.g., row 2, which is index 1)
 	            Row dataRow = sheet.getRow(randomElement);
-	            
+
 	         // Create a map to store the data for the specific row, using column names as keys
 	            Map<String, String> BANValue = new HashMap<>();
-	            
+
 	            // Iterate over the headerMap to fetch the corresponding data for each column
 	            for (Map.Entry<String, Integer> entry : rowMap.entrySet()) {
-	                String columnName = entry.getKey();
-	                int columnIndex = entry.getValue();
-	                
+					String columnName = entry.getKey();
+					int columnIndex = entry.getValue();
+
 	                // Get the cell value for the specific column and row
 	                Cell cell1 = dataRow.getCell(columnIndex);
-	                
+
 	                // Get the cell value (as String) and store it in the map
 	                String cellValue = cell1 != null ? cell1.toString() : ""; // Handle nulls
 	                BANValue.put(columnName, cellValue);
 	            }
-	            
+
 	         // Print the resulting map
 	            System.out.println("Data Row Map: " + BANValue);
-	            
-	            
+
+
 	            //Row dataRow = sheet.getRow(statusIndex);
-	            
-	      //*****call function to populate input invoice file
-	       createInputInvoiceFIle.populateIIFile(outputpath, rowNum,BANValue, billCycleStartDate, BAN, amount,testResultstestResults,i);
-	       
+
 	     //*****call function to populate input cm account change  file
 	       createCmAccountFIle.populateCMAccountFile(outputpath, rowNum,BANValue, BAN, amount, eMail,testResultstestResults,i);
-	       
-	     //*****call function to populate input cm account change  file
-	       createInputAgedStatus.populateInputAgedStatusFile(outputpath, rowNum,BAN, amount, del_Cycle,testResultstestResults,i);
 
-	            
-	            } catch (IOException e) {
+	     //*****call function to populate input cm account change  file
+	       createInputAgedStatus.populateInputAgedStatusFile(BANValue,outputpath, rowNum,BAN, amount, del_Cycle,testResultstestResults,i);
+
+
+			//*****call function to populate input invoice file
+			createInputInvoiceFIle.populateIIFile(outputpath, rowNum,BANValue, billCycleStartDate, BAN, amount,testResultstestResults,i);
+
+
+
+
+		} catch (Exception   e) {
+					System.out.println("The ArrayList  statusIndex is not empty.: " + e.getMessage());
 	            e.printStackTrace();
 	        }
 		
 		
 		
 
-	    }
+	    }catch (IOException e) {
+			e.printStackTrace();
+		}
 				
 
 		
-}
+}}

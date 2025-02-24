@@ -8,17 +8,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import com.telus.Properties.GetHeaderColumnNames;
-import java.util.ArrayList;
 
 public class createInputAgedStatus {
 	
-	public static void  populateInputAgedStatusFile(String outputpath, int rowNum, String BAN, int amount, int del_Cycle,
+	public static void  populateInputAgedStatusFile(Map<String, String> BANValue,String outputpath, int rowNum, String BAN, int amount, int del_Cycle,
 			List<String> testResults, int i) throws FileNotFoundException {
 		
 		//Input invoice file 
@@ -168,9 +163,6 @@ public class createInputAgedStatus {
             fos = new FileOutputStream(file);
             workbook.write(fos);
 
-            System.out.println("Data written to Input aged Status file successfully!");  
-            testResults.add("Test case " + i + " is passed - input_aged_status_YYYYMMDD");
-	        
 
         }		catch (IOException e) {
         	System.out.println("catch exception"); 
@@ -183,7 +175,13 @@ public class createInputAgedStatus {
                 if (workbook != null) workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }	
+            }
+
+            System.out.println("populateEntityID");
+            entityIDAged.populateEntityIDAged(BANValue,  BAN, i);
+
+            System.out.println("Data written to Input aged Status file successfully!");
+            testResults.add("Test case " + i + " is passed - input_aged_status_YYYYMMDD");
 
 		
 }

@@ -55,6 +55,8 @@ public class getInput {
             // Iterate over rows starting from the second row (index 1)
             //This code iterates over the rows rows of User input where each row is a test case.
             for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
+
+				System.out.println("getPhysicalNumberOfRows  "+ sheet.getPhysicalNumberOfRows());
             	
             	System.out.println("\n\n************Initiating Test Case "+i + "***********\n");
             	System.out.print("Details of test case number "+ i);

@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static com.telus.InputInvoiceFile.entityIDinvoice.populateEntityIDinvoice;
+
 public class createInputInvoiceFIle {
 	
 	public static void  populateIIFile(String outputpath,int rowNum, Map<String, String> BANValue, String billCycleStartDate, String BAN, int amount,
@@ -108,9 +110,6 @@ public class createInputInvoiceFIle {
             // Write the changes back to the file
             fos = new FileOutputStream(file);
             workbook.write(fos);
-
-            System.out.println("Data written to Input Invoice file successfully!");   
-            testResults.add("Test case " + i + " is passed - Input Invoice");
 	        
 
         }		catch (IOException e) {
@@ -124,8 +123,13 @@ public class createInputInvoiceFIle {
                 if (workbook != null) workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }	
+            }
 
+            System.out.println("populateEntityID");
+            entityIDinvoice.populateEntityIDinvoice(BANValue,  BAN,  i);
+
+            System.out.println("Data written to Input Invoice file successfully!");
+            testResults.add("Test case " + i + " is passed - Input Invoice");
 		
 }
         }
