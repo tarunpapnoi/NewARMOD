@@ -170,8 +170,7 @@ public class createCmAccountFIle {
             fos = new FileOutputStream(file);
             workbook.write(fos);
 
-            System.out.println("Data written to CM Account file successfully!");    
-            testResults.add("Test case " + i + " is passed - input_exp_cm_account_change");
+            //fetch Entity id and populate
 	        
 
         }		catch (IOException e) {
@@ -185,8 +184,13 @@ public class createCmAccountFIle {
                 if (workbook != null) workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
-            }	
+            }
 
+            System.out.println("populateEntityID");
+            entityIDcm.populateEntityIDcm(BANValue,  BAN, i, eMail);
+
+            System.out.println("Data written to Input aged Status file successfully!");
+            testResults.add("Test case " + i + " is passed - input_aged_status_YYYYMMDD");
 		
 }
         }
