@@ -45,4 +45,4 @@ jobs:
     steps:
     - name: run main
       run: |
-        java -cp src/test/java com.telus.Properties.ExcelReader
+        run: mvn -B package --file ARMODFileAutomation/FileAutomation/pom.xml
