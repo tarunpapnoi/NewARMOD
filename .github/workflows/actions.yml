@@ -35,6 +35,8 @@ jobs:
           cache: maven
       - name: List repository files
         run: ls -R  # This will list all files and directories to help debug path issues
+      - name: Build with Maven
+        run: mvn clean install --file ARMODFileAutomation/FileAutomation/pom.xml
 
 
   RUN_FILE_AUTOMATION_FLOW:
