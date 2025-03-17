@@ -45,5 +45,5 @@ jobs:
     steps:
       - name: Run ExcelReader main class
         run: |
-          java -cp FileAutomation/target/classes com.telus.Properties.ExcelReader
+          java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
 
