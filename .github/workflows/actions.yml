@@ -39,6 +39,8 @@ jobs:
         run: ls -R  # This will list all files and directories to help debug path issues
       - name: Build with Maven
         run: mvn -B clean install --settings ./settings.xml --file FileAutomation/pom.xml
+      - name: check JAVA version 2
+        run: java -version
 
 
   RUN_FILE_AUTOMATION_FLOW:
