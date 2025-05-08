@@ -43,6 +43,12 @@ jobs:
         run: mvn -B clean install --settings ./settings.xml --file FileAutomation/pom.xml
 
       # Run ExcelReader main class
+      #- name: Run ExcelReader main class
+       # run: |
+        #  java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
       - name: Run ExcelReader main class
         run: |
-          java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
+          mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt -f FileAutomation/pom.xml
+          CP=$(cat classpath.txt):FileAutomation/target/test-classes
+          java -cp "$CP" com.telus.Properties.ExcelReader
+
