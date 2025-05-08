@@ -4,45 +4,30 @@
   xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
   <mirrors>
+    <!-- Use Maven Central instead of internal repository -->
     <mirror>
-      <id>TELUSCentral</id>
-      <mirrorOf>*,!telus-build-authorized</mirrorOf>
-      <url>http://mavenrepository.tsl.telus.com/nexus/content/groups/telus-unauthorized</url>
+      <id>central</id>
+      <mirrorOf>central</mirrorOf>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <blocked>false</blocked>
     </mirror>
   </mirrors>
 
   <profiles>
+    <!-- Maven Central repository profile -->
     <profile>
-      <id>telus</id>
+      <id>central</id>
       <repositories>
         <repository>
-          <id>telus-unauthorized</id>
-          <url>http://mavenrepository.tsl.telus.com/nexus/content/groups/telus-unauthorized</url>
-          <releases>
-            <enabled>true</enabled>
-            <checksumPolicy>warn</checksumPolicy>
-            <updatePolicy>always</updatePolicy>
-          </releases>
+          <id>central</id>
+          <url>https://repo.maven.apache.org/maven2</url>
         </repository>
       </repositories>
-      <pluginRepositories>
-        <pluginRepository>
-          <id>telus-build-authorized</id>
-          <url>http://mavenrepository.tsl.telus.com/nexus/content/groups/telus-build-authorized</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </pluginRepository>
-      </pluginRepositories>
     </profile>
   </profiles>
+
   <activeProfiles>
-    <activeProfile>telus</activeProfile>
+    <activeProfile>central</activeProfile>
   </activeProfiles>
-  <pluginGroups>
-    <pluginGroup>telus-maven.plugins</pluginGroup>
-  </pluginGroups>
+
 </settings>
