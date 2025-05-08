@@ -41,13 +41,16 @@ jobs:
         run: mvn -B clean install --settings ./settings.xml --file FileAutomation/pom.xml
       - name: check JAVA version 2
         run: java -version
-
-
-  RUN_FILE_AUTOMATION_FLOW:
-    runs-on: self-hosted
-    needs: [build]
-    steps:
       - name: Run ExcelReader main class
         run: |
           java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
+
+
+  #RUN_FILE_AUTOMATION_FLOW:
+   # runs-on: self-hosted
+    #needs: [build]
+    #steps:
+    #  - name: Run ExcelReader main class
+    #    run: |
+    #      java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
 
