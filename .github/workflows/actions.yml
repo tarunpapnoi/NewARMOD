@@ -30,15 +30,6 @@ jobs:
           java-version: '21'  # You can change this if you're using another JDK version
           distribution: 'temurin'
 
-      # Cache Maven dependencies to speed up builds
-      - name: Cache Maven dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
       # Check Java version (to ensure correct version is used)
       - name: Check Java version
         run: java -version
