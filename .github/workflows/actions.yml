@@ -49,6 +49,10 @@ jobs:
       - name: Run ExcelReader main class
         run: |
           mvn dependency:build-classpath -Dmdep.outputFile=classpath.txt -f FileAutomation/pom.xml
+          if [ ! -f classpath.txt ]; then echo "Classpath file not found!"; exit 1; fi
           CP=$(cat classpath.txt):FileAutomation/target/test-classes
           java -cp "$CP" com.telus.Properties.ExcelReader
+          
+      - name: Run ExcelReader main class
+
 
