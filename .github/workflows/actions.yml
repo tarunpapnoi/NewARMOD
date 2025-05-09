@@ -67,6 +67,3 @@ jobs:
             CP=$(cat FileAutomation/classpath.txt):FileAutomation/target/test-classes
             echo "Executing Java with classpath: $CP"
             java -cp "$CP" com.telus.Properties.ExcelReader
-
-
-
