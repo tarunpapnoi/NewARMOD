@@ -20,7 +20,7 @@ public class ExcelReader {
     	//*******************************************************************************************
     	// Load properties from config file
         Properties properties = new Properties();
-        String configFilePath = "src/main/resources/config.properties";  // Adjust path accordingly
+        String configFilePath = "src/main/resources/Config.properties";  // Adjust path accordingly
 		System.out.println("\n\n*********executing **********");
 
         try (FileInputStream input = new FileInputStream(configFilePath)) {
