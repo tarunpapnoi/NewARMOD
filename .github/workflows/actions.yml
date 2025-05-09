@@ -48,9 +48,21 @@ jobs:
         #  java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
       - name: Run ExcelReader main class
         run: |
-            mvn dependency:build-classpath -Dmdep.outputFile=FileAutomation/classpath.txt -f FileAutomation/pom.xml
-            if [ ! -f FileAutomation/classpath.txt ]; then echo "Classpath file not found!"; exit 1; fi
+            echo "Current Working Directory:"
+            pwd
+            echo "Listing FileAutomation/ directory:"
+            ls -al FileAutomation/
+            echo "Running Maven to generate classpath file..."
+            mvn -X dependency:build-classpath -Dmdep.outputFile=FileAutomation/classpath.txt -f FileAutomation/pom.xml
+            echo "Checking for classpath file..."
+            if [ ! -f FileAutomation/classpath.txt ]; then
+            echo "Classpath file not found!";
+            exit 1;
+            fi
+            echo "Classpath file found.  Contents:"
+            cat FileAutomation/classpath.txt
             CP=$(cat FileAutomation/classpath.txt):FileAutomation/target/test-classes
+            echo "Executing Java with classpath: $CP"
             java -cp "$CP" com.telus.Properties.ExcelReader
 
 
