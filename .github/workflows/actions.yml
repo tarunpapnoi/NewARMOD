@@ -56,14 +56,13 @@ jobs:
             mvn -X dependency:build-classpath -Dmdep.outputFile=FileAutomation/classpath.txt -f FileAutomation/pom.xml
             echo "Checking for classpath file..."
             if [ ! -f FileAutomation/classpath.txt ]; then
-            echo "Classpath file not found! Checking in the nested directory..."
+                echo "Classpath file not found! Checking in the nested directory..."
             if [ ! -f FileAutomation/FileAutomation/classpath.txt ]; then
-            echo "Classpath file not found in nested directory either!";
-            exit 1;
+                echo "Classpath file not found in nested directory either!"
+                exit 1;
             fi
-            echo "Found classpath file in FileAutomation/FileAutomation/classpath.txt"
+                echo "Found classpath file in FileAutomation/FileAutomation/classpath.txt"
             fi
-            # Use the correct path to read the classpath file
-            CP=$(cat FileAutomation/classpath.txt):FileAutomation/target/test-classes
+            CP=$(cat FileAutomation/FileAutomation/classpath.txt):FileAutomation/target/test-classes
             echo "Executing Java with classpath: $CP"
             java -cp "$CP" com.telus.Properties.ExcelReader
