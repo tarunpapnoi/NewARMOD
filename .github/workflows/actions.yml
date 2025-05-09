@@ -48,20 +48,20 @@ jobs:
         #  java -cp FileAutomation/target/test-classes com.telus.Properties.ExcelReader
       - name: Run ExcelReader main class
         run: |
-                    echo "Current Working Directory:"
-                    pwd
+            echo "Current Working Directory:"
+            pwd
             echo "Listing files in FileAutomation/ :"
             ls -al FileAutomation/
             echo "Running Maven to generate classpath file..."
             mvn -X dependency:build-classpath -Dmdep.outputFile=FileAutomation/classpath.txt -f FileAutomation/pom.xml
             echo "Checking for classpath file..."
             if [ ! -f FileAutomation/classpath.txt ]; then
-              echo "Classpath file not found! Checking in the nested directory..."
-              if [ ! -f FileAutomation/FileAutomation/classpath.txt ]; then
-                echo "Classpath file not found in nested directory either!";
-                exit 1;
-              fi
-              echo "Found classpath file in FileAutomation/FileAutomation/classpath.txt"
+            echo "Classpath file not found! Checking in the nested directory..."
+            if [ ! -f FileAutomation/FileAutomation/classpath.txt ]; then
+            echo "Classpath file not found in nested directory either!";
+            exit 1;
+            fi
+            echo "Found classpath file in FileAutomation/FileAutomation/classpath.txt"
             fi
             # Use the correct path to read the classpath file
             CP=$(cat FileAutomation/classpath.txt):FileAutomation/target/test-classes
